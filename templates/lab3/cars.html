@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+<div>
+    <!-- Заголовок страницы -->
+    <h1>Найдите автомобили Toyota по диапазону цен</h1>
+
+    <!-- Форма для ввода минимальной и максимальной цены -->
+    <form action="/lab3/result" method="POST">
+        <!-- Поле для минимальной цены -->
+        <label for="min_price">Минимальная цена:</label>
+        <input type="number" id="min_price" name="min_price" required>
+        <br><br>
+
+        <!-- Поле для максимальной цены -->
+        <label for="max_price">Максимальная цена:</label>
+        <input type="number" id="max_price" name="max_price" required>
+        <br><br>
+
+        <!-- Кнопка отправки формы -->
+        <button type="submit">Искать</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% block main %}
+<style>
+    /* Общие стили */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        background-image: url('https://avatars.mds.yandex.net/get-mpic/6069165/img_id8891948235606679159.jpeg/orig');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: purple;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    /* Заголовок */
+    h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 2rem; /* Уменьшенный размер текста */
+        color: #FFD700;
+        margin: 10px 0; /* Уменьшение внешних отступов */
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+        0% {
+            text-shadow: 0 0 3px red, 0 0 6px red, 0 0 9px red;
+        }
+        100% {
+            text-shadow: 0 0 15px #FFD700, 0 0 20px #FFD700, 0 0 25px #FFD700;
+        }
+    }
+
+    /* Формы */
+    form {
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px; /* Уменьшенные отступы */
+        border-radius: 15px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+        max-width: 350px; /* Меньшая максимальная ширина формы */
+        width: 90%; /* Занимает до 90% ширины экрана */
+    }
+
+    /* Поля ввода */
+    input[type="number"] {
+        padding: 10px;
+        font-size: 1rem; /* Уменьшенный размер текста */
+        border-radius: 8px;
+        border: 2px solid #FFD700;
+        width: 100%; /* Поле ввода занимает 100% ширины формы */
+        margin-bottom: 15px;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #333;
+    }
+
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #FF6347;
+    }
+
+    /* Кнопка */
+    button {
+        padding: 10px 20px; /* Уменьшенные размеры кнопки */
+        font-size: 1rem; /* Уменьшенный размер текста кнопки */
+        background-color: #FF6347;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s ease;
+        width: auto; /* Кнопка не растягивается на всю ширину */
+        margin: 10px 5px; /* Больше пространства между кнопками */
+    }
+
+    button:hover {
+        background-color: #FF4500;
+        transform: scale(1.05);
+    }
+
+    button:focus {
+        outline: none;
+    }
+
+    /* Картинка */
+    img {
+        max-width: 300px; /* Ограничение максимальной ширины */
+        height: auto; /* Пропорциональное изменение высоты */
+        margin-top: 20px; /* Отступ сверху */
+        border-radius: 10px; /* Скругленные края */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Тень */
+    }
+
+    /* Адаптивный дизайн */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8rem; /* Уменьшение заголовка для маленьких экранов */
+        }
+
+        form {
+            padding: 15px; /* Уменьшение отступов */
+        }
+
+        button {
+            font-size: 0.9rem; /* Уменьшенный текст кнопки */
+        }
+        
+        img {
+            max-width: 250px; /* Меньший размер изображения */
+        }
+    }
+</style>
+
+    <h1>Поздравление</h1>
+    <p>{{ message }}</p>
+    <img src="{{ url_for('static', filename='images/' + image) }}" alt="Поздравление">
+    <br><br>
+    <a href="{{ url_for('lab9.reset') }}">
+        <button type="button">Сбросить данные</button>
+    </a>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block lab %}Публичные статьи{% endblock %}
+{% block main %}
+
+<h1>Публичные статьи</h1>
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.article_text }}</p>
+                <p><strong>Автор:</strong> {{ article.user.login}}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Нет доступных публичных статей.</p>
+{% endif %}
+
+<a href="/lab8/" class="button-link">Вернуться на главную</a>
+
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: lightgray;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .button-link:hover {
+        background-color: darkgray;
+        color: white;
+    }
+
+  
+    body {
+            background: url('https://wallpaperswide.com/download/christmas_winter_4k-wallpaper-2880x1800.jpg') no-repeat center center fixed; 
+            background-size: cover;
+        }
+</style>
+
+{% endblock %}

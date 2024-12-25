@@ -1,182 +1,135 @@
+from flask import Flask, url_for, redirect, render_template, Response, render_template_string
+import os
+from flask_sqlalchemy import SQLAlchemy
+from db import db
+from os import path
+from db.models import users
+from flask_login import LoginManager
+from lab2 import lab2
+from lab3 import lab3
+from lab4 import lab4
+from lab5 import lab5
+from lab6 import lab6
+from lab7 import lab7
+from lab8 import lab8
+from lab9 import lab9
 
-from flask import Flask, redirect, url_for
 app = Flask(__name__)
-@app.route('/')
-@app.route('/index')
-def start():
-    return redirect ("/menu", code=302)
-@app.route('/menu')
-    
+
+login_manager = LoginManager()
+login_manager.login_view = 'lab8.login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_users(login_Id):
+    return users.query.get(int(login_Id))
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'секретно-секретный секрет')
+app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
+app.config['UPLOAD_FOLDER'] = path.join('static', 'uploads')
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+if app.config['DB_TYPE'] == 'postgres':
+    db_name = 'laptevap_base'
+    db_user = 'laptevap_base'
+    db_password = '120816'
+    host_ip = '127.0.0.1'
+    host_port = 5432
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{db_user}:{db_password}@{host_ip}:{host_port}/{db_name}'
+else:
+    dir_path = path.dirname(path.realpath(__file__))
+    db_path = path.join(dir_path, "laptevap_base.db")
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
+
+db.init_app(app)
+app.register_blueprint(lab2)
+app.register_blueprint(lab3)
+app.register_blueprint(lab4)
+app.register_blueprint(lab5)    
+app.register_blueprint(lab6)
+app.register_blueprint(lab7)
+app.register_blueprint(lab8)
+app.register_blueprint(lab9)
+
+@app.route("/")
+def slesh():
+     return redirect('/menu', code=302)
+
+
+@app.route("/index")
+def index():
+     return redirect('/lab1/menu', code=302)
+
+
+@app.errorhandler(404)
+def not_found(err):
+    return  render_template ("404.html"), 404
+
+
+@app.route("/menu")
 def menu():
-    css_path = url_for("static", filename="lab1.css")
+    css_path = url_for("static", filename="lab1/lab1.css")
     return '''
 <!DOCTYPE html>
 <html>
     <head>
-        <title>НГТУ, ФБ, Лабораторные работы</title>   
+        <title>НГТУ, ФБ, Лабораторные работы</title>
+        <link rel="stylesheet" type="text/css" href="''' + css_path + '''">       
     </head>
     <body>
         <header>
             НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных
         </header>
-        <h2><a href="/lab1">Первая лабораторная</a></h2>
-        <h2><a href="/lab2">Вторая лабораторная</a></h2>
-        <h2><a href="/lab3">Третья лабораторная</a></h2>
-        <h2><a href="/lab4">Четвёртая лабораторная</a></h2>
-        <h2><a href="/lab5">Пятая лабораторная</a></h2>
-        <h2><a href="/lab6">Шестая лабораторная</a></h2>
-        <h2><a href="/lab7">Седьмая лабораторная</a></h2>
-        <h2><a href="/lab8">Восьмая лабораторная</a></h2>
-        <h2><a href="/lab9">Девятая лабораторная</a></h2>
-
+        <ol>
+        <li><a href="/lab1">Первая лабораторная</a></li>
+        <li><a href="/lab2">Вторая лабораторная</a></li>
+        <li><a href="/lab3">Третья лабораторная</a></li>
+        <li><a href="/lab4">Четвёртая лабораторная</a></li>
+        <li><a href="/lab5">Пятая лабораторная</a></li>
+        <li><a href="/lab6">Шестая лабораторная</a></li>
+        <li><a href="/lab7">Седьмая лабораторная</a></li>
+        <li><a href="/lab8">Восьмая лабораторная</a></li>
+        <li><a href="/lab9">Девятая лабораторная</a></li>
+        <li><a href="/rgz">РГЗ</a></li>
+        </ol>
         <footer>
-            &copy; Лаптева Полина, ФБИ-24, 3 курс, 2024
+            &copy; Лаптева Полина ФБИ-24, 3 курс, 2024
         </footer>
     </body>
 </html>'''
 
 
-@app.route('/lab1')
-def lab1():
-    return '''
-<!doctype html>
-<html>
-    <head>
-        <title>Лаптева Полина Владимировна, Лабораторная 1</title>
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: lightpurple;
-                color: #333;
-                line-height: 1.6;
-                margin: 20px;
-                font-size: 15px;
-            }
-            h1 {
-                text-align: center;
-                color: blue;
-                margin-bottom: 10px;
-        
-        </style>
-    </head>
+@app.route('/400')
+def error_400():
+    return Response('Неверный запрос', status=400)
 
-    <body>
-        <header>
-            Лабораторная работа 1
-        </header>
+@app.route('/401')
+def error_401():
+    return Response('Неавторизованный доступ', status=401)
 
-        <h1>
-            Flask — фреймворк для создания веб-приложений на языке
-            программирования Python, использующий набор инструментов
-            Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
-            называемых микрофреймворков — минималистичных каркасов
-            веб-приложений, сознательно предоставляющих лишь самые базовые возможности. <br>        
-            
-            <a href="/">Меню</a>
-         <header>
-            Реализованные роуты
-        </header>
-            <a href="/">Студент</a>
-            <a href="/">Питон</a>
-            <a href="/">Дуб</a>
-            <a href="/">Эмоции</a>
-        
-        </h1> 
-        '''
-@app.route('/lab1/oak')
-def oak():
-    css_path = url_for("static", filename="lab1.css")
-    path = url_for("static", filename="oak.jpg")
-    return '''
-<!doctype html>
-<html>
-    <body>
-        <h1>Дуб</h1>
-         <link rel="stylesheet" type="text/css" href="''' + css_path + '''">
-        <img src=" '''+ url_for('static', filename='oak.jpg') +  ''' ">
-    </body>
-</html>'''
-@app.route('/lab1/Student')
-def Student():
-    css_path = url_for("static", filename="lab1.css")
-    path = url_for("static", filename="Student.jpg")
-    return '''
-<!doctype html>
-<html>
-    <body>   <header>
-            Студент
-        </header>
+@app.route('/402')
+def error_402():
+    return Response('Необходима оплата', status=402)
 
-        <h1>
-            Лаптева Полина Владимировна. <br>        
-        </h1> 
-         <link rel="stylesheet" type="text/css" href="''' + css_path + '''">
-        <img src=" '''+ url_for('static', filename='Student.jpg') +  ''' ">
-    </body>
-</html>'''
-@app.route('/lab1/Python')
-def Python():
-    css_path = url_for("static", filename="lab1.css")
-    path = url_for("static", filename="Python.jpg")
-    return '''
-<!doctype html>
-<html>
-       <header>
-        Питон
-        </header>
+@app.route('/403')
+def error_403():
+    return Response('Доступ запрещён', status=403)
 
-        <h1>
-            Python () в русском языке встречаются названия пито́н или па́йтон) — мультипарадигмальный высокоуровневый 
-            язык программирования общего назначения с динамической строгой типизацией и автоматическим управлением памятью
-              ориентированный на повышение производительности разработчика, читаемости кода и его качества, а также 
-              на обеспечение переносимости написанных на нём программ. Язык является полностью объектно-ориентированным 
-              в том плане, что всё является объектами[14].
-               <br> Необычной особенностью языка является выделение блоков кода отступами. 
-              
-              Синтаксис ядра языка минималистичен, за счёт чего на практике редко возникает необходимость обращаться к документации.
-                Сам же язык известен как интерпретируемый и используется в том числе для написания скрипто.
-             <br> Недостатками языка являются зачастую более низкая скорость работы и более высокое потребление памяти написанных
-              на нём программ по сравнению с аналогичным кодом, написанным на компилируемых языках, таких как C или C++.        
-           
-        </h1> 
-         <link rel="stylesheet" type="text/css" href="''' + css_path + '''">
-        <img src=" '''+ url_for('static', filename='Python.jpg') +  ''' ">
-    </body>
-</html>'''
-@app.route('/lab1/amotion')
-def amotion():
-    css_path = url_for("static", filename="lab1.css")
-    path = url_for("static", filename="amotion.jpg")
-    return '''
-<!doctype html>
-<html>
-       <header>
-       Эмоции
-        </header>
+@app.route('/405')
+def error_405():
+    return Response('Метод не разрешён', status=405)
 
-        <h1>
-            Под эмоциями понимают протяжённые во времени процессы внутренней регуляции деятельности человека или животного, отражающие смысл 
-            (значение для процесса его жизнедеятельности), 
-            который имеют существующие или возможные в его жизни ситуации. 
-            У человека эмоции порождают переживания удовольствия, неудовольствия, страха,
-             
-               робости и тому подобного, играющие роль ориентирующих субъективных сигналов. Способа оценить
-                 наличие субъективных переживаний (ввиду того, что они субъективны) у животных научными методами пока не найдено. 
-                 В этом контексте важно понимать, что сама по себе эмоция может, но не обязана такое переживание порождать, и сводится 
-                 именно к процессу внутренней регуляции деятельности. Существует мнение, что эмоции не входят в сферу исследований психологов.
+@app.route('/418')
+def error_418():
+    return Response('Я чайник', status=418)
 
-                <br>Эмоции эволюционно развились из простейших врождённых эмоциональных процессов, сводящихся к органическим, 
-                двигательным и секреторным изменениям, до значительно более сложных, утративших инстинктивную основу процессов, 
-                имеющих отчётливую привязку к ситуации в целом, то есть выражающих личное оценочное отношение к имеющимся или 
-                возможным ситуациям, к своему участию в них. К первичным витальным (связанным с выживанием) эмоциям, унаследованным
-                  человеком, относятся страх, ярость, боль и тому подобные эмоции.
 
-                <br>Выражение эмоций имеет черты социально формирующегося, изменяющегося с течением истории языка, 
-                что можно видеть из различных этнографических описаний. В пользу этого взгляда говорит также, например, 
-                своеобразная бедность мимики у слепых от рождения людей
-    
-        </h1> 
-         <link rel="stylesheet" type="text/css" href="''' + css_path + '''">
-        <img src=" '''+ url_for('static', filename='amotion.jpg') +  ''' ">
-    </body>
-</html>'''
+@app.route('/error')
+def trigger_error():
+    result = 1 / 0
+    return str(result)
+
+@app.errorhandler(500)
+def internal_server_error(err):
+    return render_template('500.html'), 500

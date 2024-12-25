@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block lab %}Создание статьи{% endblock %}
+{% block main %}
+
+<h1>Создать новую статью</h1>
+
+
+<style>
+    body {
+        background: url('https://wallpaperswide.com/download/christmas_winter_4k-wallpaper-2880x1800.jpg') no-repeat center center fixed; 
+        background-size: cover;
+    }
+</style>
+<form action="/lab8/create" method="post">
+    <div>
+        <label for="title">Название статьи:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+
+    <div>
+        <label for="article_text">Текст статьи:</label>
+        <textarea id="article_text" name="article_text" rows="10" required></textarea>
+    </div>
+
+
+    <div>
+        <label>
+            <input type="checkbox" name="is_public"> Сделать публичной
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="is_favorite"> Добавить в избранное
+        </label>
+    </div>
+
+    <button type="submit">Создать статью</button>
+</form>
+
+{% endblock %}

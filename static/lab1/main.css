@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Установить элементы в колонку */
+    align-items: center; /* Центрировать по горизонтали */
+    height: 100vh; /* Занять всю высоту окна */
+    background-color: #f0f0f0; /* Светло-серый фон */
+}
+
+main {
+    margin-bottom: 40px; /* Отступ снизу */
+    padding: 30px; /* Увеличенные внутренние отступы */
+    background-color: white; /* Белый фон для рамки */
+    border: 2px solid purple; /* Фиолетовая рамка */
+    border-radius: 10px; /* Закругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    max-width: 80%; /* Увеличенная максимальная ширина рамки */
+    width: 100%; /* Адаптивная ширина */
+    text-align: left; /* Выравнивание текста */
+    flex-grow: 1; /* Позволяет main занимать все доступное пространство */
+}
+
+header {
+    margin-bottom: 30px; /* Отступ снизу */
+    padding: 20px; /* Внутренние отступы */
+    background: lightgray; /* Фон заголовка */
+    left: 0;
+    right: 0;
+}
+
+footer {
+    margin-top: 20px; /* Отступ сверху */
+    padding: 10px; /* Внутренние отступы */
+    background: lightgray; /* Фон футера */
+    text-align: right; /* Выравнивание текста */
+    position: relative; /* Устанавливаем относительное положение */
+    bottom: 0; /* Установить внизу */
+    left: 0; /* Установить по левому краю */
+    right: 0; /* Установить по правому краю */
+}

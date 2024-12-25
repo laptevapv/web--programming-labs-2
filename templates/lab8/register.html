@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+{% block main %}
+
+    <h1>Регистрация</h1>
+
+    <style>
+        body {
+            background: url('https://wallpaperswide.com/download/christmas_winter_4k-wallpaper-2880x1800.jpg') no-repeat center center fixed; 
+            background-size: cover;
+        }
+    </style>
+    <form action="/lab8/register" method="post">
+
+        <div>
+            <label>
+                Логин <input type="text" name="login">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                Пароль: <input type="password" name="password">
+            </label>
+
+        </div>
+        {% if error %}
+            <div style="color: red;">{{ error }}</div>
+        {% endif %}
+        <button type="submit">Зарегистрироватся</button>
+    </form>
+{% endblock %}

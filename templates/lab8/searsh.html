@@ -1,0 +1,17 @@
+<form action="/lab8/search" method="get" style="margin-bottom: 20px;">
+    <input type="text" name="query" placeholder="Введите текст для поиска" value="{{ query }}" required>
+    <button type="submit">Поиск</button>
+</form>
+
+{% if articles %}
+    <ul>
+        {% for article in articles %}
+            <li>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.article_text }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Ничего не найдено.</p>
+{% endif %}

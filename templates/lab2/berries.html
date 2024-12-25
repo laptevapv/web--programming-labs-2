@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+
+{% block main %}
+        <div>
+            {% for berry in berries %}
+                <div style="margin-bottom: 20px;">
+                <div>{{ berry.name }}</div>
+                <img src="{{ berry.image}}"  width="300">
+                <p>{{ berry.description }}</p>
+            {% endfor %}
+        </div>
+{% endblock %}

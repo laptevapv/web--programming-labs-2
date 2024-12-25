@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block lab %}Редактирование статьи{% endblock %}
+{% block main %}
+
+<h1>Редактировать статью</h1>
+
+<form action="/lab8/edit/{{ article.id }}" method="post">
+    <div>
+        <label for="title">Название статьи:</label>
+        <input type="text" id="title" name="title" value="{{ article.title }}" required>
+    </div>
+
+    <div>
+        <label for="article_text">Текст статьи:</label>
+        <textarea id="article_text" name="article_text" rows="10" required>{{ article.article_text }}</textarea>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="is_public" {% if article.is_public %}checked{% endif %}> Сделать публичной
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input type="checkbox" name="is_favorite" {% if article.is_favorite %}checked{% endif %}> Добавить в избранное
+        </label>
+    </div>
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="/lab8/articles" class="button-link">Вернуться к списку статей</a>
+
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: lightgray;
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .button-link:hover {
+        background-color: darkgray;
+        color: white;
+    }
+
+    
+    body {
+            background: url('https://wallpaperswide.com/download/christmas_winter_4k-wallpaper-2880x1800.jpg') no-repeat center center fixed; 
+            background-size: cover;
+        }
+    
+</style>
+
+{% endblock %}

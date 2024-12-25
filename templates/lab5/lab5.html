@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 5{% endblock %}
+{% block main %}
+    <h1>База знаний</h1>
+
+    <div>
+        <p>Добро пожаловать, {{login if login else "anonumus"}}!</p>
+    </div>
+    
+    <!-- Контейнер для ссылок, стилизованных как кнопки -->
+    <div class="link-container">
+        <a href="/lab5/login" class="button-link">Вход</a>
+        <a href="/lab5/register" class="button-link">Регистрация</a><br>
+        <a href="/lab5/list" class="button-link">Список статей</a>
+        <a href="/lab5/create" class="button-link">Создать статью</a><br>
+        <a href="/lab5/users" class="button-link">Все пользователи</a>
+        <a href="/lab6/" class="button-link">Список кабинетов</a>
+        {% if login %}
+        <a href="/lab5/logout" class="button-link">Выйти</a>
+    {% endif %}
+    </div>
+
+    <style>
+        /* Стили для контейнера */
+        .link-container {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+    
+        /* Стили для каждой ссылки, чтобы выглядела как кнопка */
+        .button-link {
+            padding: 8px 15px;
+            background-color: lightgoldenrodyellow;
+            border: 1px solid #c0c0c0;
+            border-radius: 5px;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        /* Эффект при наведении на ссылки-кнопки */
+        .button-link:hover {
+            background-color: lightgreen;
+            border-color: #a0c0e0;
+        }
+    
+    </style>
+{% endblock %}

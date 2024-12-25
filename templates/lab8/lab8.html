@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+{% block main %}
+    <h1>База знаний</h1>
+
+    <div>
+        <p>Добро пожаловать, {{login if login else "anonumus"}}!</p>
+    </div>
+    
+    <!-- Контейнер для ссылок, стилизованных как кнопки -->
+    <div class="link-container">
+        <a href="/lab8/login" class="button-link">Вход</a>
+        <a href="/lab8/register" class="button-link">Регистрация</a><br>
+        <a href="/lab8/articles" class="button-link">Список статей</a>
+        <a href="/lab8/create" class="button-link">Создать статью</a><br>
+        <a href="/lab8/public_articles" class="button-link">Публичные статьи</a>
+        {% if login %}
+        <a href="/lab8/logout" class="button-link">Выйти</a>
+        {% endif %}
+    </div>
+
+    <style>
+        body {
+            background: url('https://wallpaperswide.com/download/christmas_winter_4k-wallpaper-2880x1800.jpg') no-repeat center center fixed; 
+            background-size: cover;
+            color: darkgreen; 
+        }
+        .link-container {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        /* Стили для каждой ссылки, чтобы выглядела как кнопка */
+        .button-link {
+            padding: 10px 20px;
+            background-color: lightsalmon; /* Красный цвет с прозрачностью */
+            border: 2px solid gold;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        /* Эффект при наведении на ссылки-кнопки */
+        .button-link:hover {
+            background-color: rgba(0, 128, 0, 0.8); /* Зеленый цвет с прозрачностью */
+            transform: scale(1.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-shadow: 2px 2px 5px #000;
+        }
+    </style>
+
+{% endblock %}

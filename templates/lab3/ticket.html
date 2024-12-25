@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+<div>
+    <h1>Ваш билет на поезд</h1>
+    <p><strong>ФИО пассажира:</strong> {{ passenger_name }}</p>
+    <p><strong>Билет:</strong> 
+        {% if passenger_type == 'child' or passenger_age < 18 %}
+            Детский
+        {% else %}
+            Взрослый
+        {% endif %}
+    </p>
+    <p><strong>Тип полки:</strong> 
+    {% if berth_type == 'lower' %}
+        Нижняя
+    {% elif berth_type == 'upper' %}
+        Верхняя
+    {% elif berth_type == 'upper_side' %}
+        Верхняя боковая
+    {% elif berth_type == 'lower_side' %}
+        Нижняя боковая
+    {% endif %}
+    </p>
+    <p><strong>С бельем:</strong> {% if withunderwear == 'on' %}Да{% else %}Нет{% endif %}</p>
+    <p><strong>С багажом:</strong> {% if luggage == 'on' %}Да{% else %}Нет{% endif %}</p>
+    <p><strong>Со страховкой:</strong> {% if insurance == 'on' %}Да{% else %}Нет{% endif %}</p>
+    <p><strong>Возраст:</strong> {{ passenger_age }}</p>
+    <p><strong>Пункт выезда:</strong> {{ departure_point }}</p>
+    <p><strong>Пункт назначения:</strong> {{ destination }}</p>
+    <p><strong>Дата поездки:</strong> {{ travel_date }}</p>
+    <p><strong>Стоимость билета:</strong> {{ ticket_price }} руб.</p>
+</div>
+{% endblock %}
